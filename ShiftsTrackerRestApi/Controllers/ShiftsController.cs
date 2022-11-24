@@ -12,10 +12,10 @@ public class ShiftsController : ControllerBase
     private readonly ShiftsManager _shiftsManager;
     private readonly UsersManager _usersManager;
     
-    public ShiftsController()
+    public ShiftsController(RestContext context)
     {
-        _usersManager = new UsersManager();
-        _shiftsManager = new ShiftsManager();
+        _usersManager = new UsersManager(context);
+        _shiftsManager = new ShiftsManager(context);
     }
     
     [HttpGet]

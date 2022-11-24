@@ -10,11 +10,15 @@ namespace ShiftsTrackerRestApi.Controllers;
 public class UsersController : ControllerBase
 {
     private readonly UsersManager _usersManager;
+   
     
-    public UsersController()
+    public UsersController(RestContext context)
     {
-        _usersManager = new UsersManager();
+        //DB context
+        _usersManager = new UsersManager(context);
+       
     }
+    
     
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]

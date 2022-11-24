@@ -8,8 +8,15 @@ public class ShiftsManager
     
     private static int _nextShiftId = 1;
 
-
     
+    private RestContext _context;
+
+    public ShiftsManager(RestContext context)
+    {
+        _context = context;
+    }
+    
+    /*
     private static readonly List<Shift> Shifts = new ()
     {
         new Shift
@@ -27,20 +34,22 @@ public class ShiftsManager
             CreatedAt = DateTime.Now
         },
     };
+    */
     
     public List<Shift> GetShifts()
     {
-        return Shifts.ToList();
+        
+        return _context.Shifts.ToList();
     }
     
     public Shift? GetShift(int id)
     {
-        return Shifts.FirstOrDefault(s => s.Id == id);
+        return _context.Shifts.FirstOrDefault(s => s.Id == id);
     }
     
     public Shift AddShift(int userId)
     {
-        var lastShift = Shifts.LastOrDefault(s => s.EmployeeId == userId);
+        var lastShift = _context.Shifts.LastOrDefault(s => s.EmployeeId == userId);
         var shiftStatus = lastShift?.ShiftStatus == ShiftStatus.CheckedIn
             ? ShiftStatus.CheckedOut
             : ShiftStatus.CheckedIn;
@@ -52,19 +61,19 @@ public class ShiftsManager
             CreatedAt = DateTime.Now
         };
         
-        Shifts.Add(newShift);
+        _context.Shifts.Add(newShift);
         return newShift;
     }
     
     public void DeleteShift(int  id)
     {
-        var shift = Shifts.FirstOrDefault(s => s.Id == id);
+        var shift = _context.Shifts.FirstOrDefault(s => s.Id == id);
         if (shift == null)
         {
             return;
         }
         
-        Shifts.Remove(shift);
+        _context.Shifts.Remove(shift);
     }
     
     public Shift? UpdateShift(int id , Shift shift)
@@ -82,7 +91,7 @@ public class ShiftsManager
     
     public List<Shift> GetShiftsByEmployeeId(int employeeId)
     {
-        return Shifts.Where(s => s.EmployeeId == employeeId).ToList();
+        return _context.Shifts.Where(s => s.EmployeeId == employeeId).ToList();
     }
 
 
