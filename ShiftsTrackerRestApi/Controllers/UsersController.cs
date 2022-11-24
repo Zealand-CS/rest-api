@@ -5,6 +5,8 @@ using ShiftsTrackerRestApi.Models;
 
 namespace ShiftsTrackerRestApi.Controllers;
 
+[ApiController]
+[Route("[controller]")]
 public class UsersController : ControllerBase
 {
     private readonly UsersManager _usersManager;

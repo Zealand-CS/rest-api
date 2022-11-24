@@ -10,13 +10,13 @@ public class ShiftsManager
 
 
     
-    private static readonly List<Shift> _shifts = new ()
+    private static readonly List<Shift> Shifts = new ()
     {
         new Shift
         {
             Id = _nextShiftId++,
             EmployeeId = 1,
-            ShiftStatus = ShiftStatus.CheckedOut,
+            ShiftStatus = ShiftStatus.CheckedIn,
             CreatedAt = DateTime.Now
         },
         new Shift
@@ -30,34 +30,44 @@ public class ShiftsManager
     
     public List<Shift> GetShifts()
     {
-        return _shifts.ToList();
+        return Shifts.ToList();
     }
     
     public Shift? GetShift(int id)
     {
-        return _shifts.FirstOrDefault(s => s.Id == id);
+        return Shifts.FirstOrDefault(s => s.Id == id);
     }
     
-    public Shift AddShift(Shift shift)
+    public Shift AddShift(int userId)
     {
-        shift.Id = _nextShiftId;
-        _nextShiftId++;
-        _shifts.Add(shift);
-        return shift;
+        var lastShift = Shifts.LastOrDefault(s => s.EmployeeId == userId);
+        var shiftStatus = lastShift?.ShiftStatus == ShiftStatus.CheckedIn
+            ? ShiftStatus.CheckedOut
+            : ShiftStatus.CheckedIn;
+        var newShift = new Shift
+        {
+            Id = _nextShiftId++,
+            EmployeeId = userId,
+            ShiftStatus = shiftStatus,
+            CreatedAt = DateTime.Now
+        };
+        
+        Shifts.Add(newShift);
+        return newShift;
     }
     
     public void DeleteShift(int  id)
     {
-        var shift = _shifts.FirstOrDefault(s => s.Id == id);
+        var shift = Shifts.FirstOrDefault(s => s.Id == id);
         if (shift == null)
         {
             return;
         }
         
-        _shifts.Remove(shift);
+        Shifts.Remove(shift);
     }
     
-    public Shift UpdateShift(int id , Shift shift)
+    public Shift? UpdateShift(int id , Shift shift)
     {
         var existingShift = GetShift(id);
         if (existingShift == null) return null;
@@ -68,6 +78,11 @@ public class ShiftsManager
         existingShift.CreatedAt = shift.CreatedAt;
         
         return existingShift;
+    }
+    
+    public List<Shift> GetShiftsByEmployeeId(int employeeId)
+    {
+        return Shifts.Where(s => s.EmployeeId == employeeId).ToList();
     }
 
 

@@ -43,27 +43,12 @@ public class UsersManager
     public User AddUser(User user)
     {
         user.Id = _nextUserId;
+        user.Role = Role.Employee;
         _nextUserId++;
         _users.Add(user);
         return user;
     }
     
-    public User UpdateUser(User user)
-    {
-        var existingUser = _users.FirstOrDefault(u => u.Id == user.Id);
-        if (existingUser == null)
-        {
-            return null;
-        }
-        
-        existingUser.NfcCardId = user.NfcCardId;
-        existingUser.FirstName = user.FirstName;
-        existingUser.LastName = user.LastName;
-        existingUser.Email = user.Email;
-        existingUser.Role = user.Role;
-        
-        return existingUser;
-    }
     
     public User DeleteUser(int id)
     {
@@ -82,9 +67,13 @@ public class UsersManager
         existingUser.FirstName = user.FirstName;
         existingUser.LastName = user.LastName;
         existingUser.Email = user.Email;
-        existingUser.Role = user.Role;
         
         return existingUser;
+    }
+    
+    public User? GetUserByNfcCardId(string nfcCardId)
+    {
+        return _users.FirstOrDefault(u => u.NfcCardId == nfcCardId);
     }
     
 }
