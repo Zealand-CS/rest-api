@@ -6,13 +6,15 @@ namespace ShiftsTrackerRestApi.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class ShiftController : ControllerBase
+public class ShiftsController : ControllerBase
 {
     
     private readonly ShiftsManager _shiftsManager;
+    private readonly UsersManager _usersManager;
     
-    public ShiftController()
+    public ShiftsController()
     {
+        _usersManager = new UsersManager();
         _shiftsManager = new ShiftsManager();
     }
     

@@ -1,8 +1,14 @@
+using ShiftsTrackerRestApi.Enums;
+
 namespace ShiftsTrackerRestApi.Models;
 
 public class Shift
 {
-    public string Id { get; set; }
-    public string EmployeeId { get; set; }
-    public DateTime createdAt { get; set; }
+    public int Id { get; set; }
+    public int EmployeeId { get; set; }
+
+    public ShiftStatus ShiftStatus { get; set; }
+    public DateTime CreatedAt { get; set; }
+    
+    
 }
