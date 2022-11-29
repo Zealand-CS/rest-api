@@ -65,6 +65,7 @@ public class ShiftsManager
         existingShift.ShiftStatus = shift.ShiftStatus;
         existingShift.CreatedAt = shift.CreatedAt;
         
+        //shift.Validator();
         _context.SaveChanges();
         
         return existingShift;

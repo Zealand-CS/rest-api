@@ -26,6 +26,7 @@ public class UsersManager
     public User AddUser(User user)
     {
         user.Role = Role.Employee;
+        user.Validator();
         _context.Users.Add(user);
         _context.SaveChanges();
         return user;
@@ -52,6 +53,7 @@ public class UsersManager
         existingUser.LastName = user.LastName;
         existingUser.Email = user.Email;
         
+        user.Validator();
         _context.SaveChanges();
         
         return existingUser;

@@ -18,7 +18,13 @@ public class Shift
     
     public void ValidateShiftStatus()
     {
-        if (false == Enum.IsDefined(typeof(ShiftStatus), ShiftStatus)) throw new ArgumentException("Role is not valid");
+        if (false == Enum.IsDefined(typeof(ShiftStatus), ShiftStatus)) throw new ArgumentException("ShiftStatus is not valid");
+    }
+    
+    public void Validator()
+    {
+        ValidateEmployeeId();
+        ValidateShiftStatus();
     }
     
     
