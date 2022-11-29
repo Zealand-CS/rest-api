@@ -30,6 +30,7 @@ public class ShiftsManager
         var shiftStatus = lastShift?.ShiftStatus == ShiftStatus.CheckedIn
             ? ShiftStatus.CheckedOut
             : ShiftStatus.CheckedIn;
+        
         var newShift = new Shift
         {
             EmployeeId = userId,
