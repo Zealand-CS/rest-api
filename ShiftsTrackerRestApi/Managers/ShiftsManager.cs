@@ -5,10 +5,7 @@ namespace ShiftsTrackerRestApi.Managers;
 
 public class ShiftsManager
 {
-    
-    private static int _nextShiftId = 1;
 
-    
     private RestContext _context;
 
     public ShiftsManager(RestContext context)
@@ -16,29 +13,9 @@ public class ShiftsManager
         _context = context;
     }
     
-    /*
-    private static readonly List<Shift> Shifts = new ()
-    {
-        new Shift
-        {
-            Id = _nextShiftId++,
-            EmployeeId = 1,
-            ShiftStatus = ShiftStatus.CheckedIn,
-            CreatedAt = DateTime.Now
-        },
-        new Shift
-        {
-            Id = _nextShiftId++,
-            EmployeeId = 2,
-            ShiftStatus = ShiftStatus.CheckedIn,
-            CreatedAt = DateTime.Now
-        },
-    };
-    */
     
     public List<Shift> GetShifts()
     {
-        
         return _context.Shifts.ToList();
     }
     
@@ -49,20 +26,20 @@ public class ShiftsManager
     
     public Shift AddShift(int userId)
     {
-        var lastShift = _context.Shifts.LastOrDefault(s => s.EmployeeId == userId);
+        var lastShift = _context.Shifts.OrderBy(s => s.CreatedAt).LastOrDefault(s => s.EmployeeId == userId);
         var shiftStatus = lastShift?.ShiftStatus == ShiftStatus.CheckedIn
             ? ShiftStatus.CheckedOut
             : ShiftStatus.CheckedIn;
         
         var newShift = new Shift
         {
-            Id = _nextShiftId++,
             EmployeeId = userId,
             ShiftStatus = shiftStatus,
             CreatedAt = DateTime.Now
         };
         
         _context.Shifts.Add(newShift);
+        _context.SaveChanges();
         return newShift;
     }
     
@@ -75,6 +52,7 @@ public class ShiftsManager
         }
         
         _context.Shifts.Remove(shift);
+        _context.SaveChanges();
     }
     
     public Shift? UpdateShift(int id , Shift shift)
@@ -86,6 +64,8 @@ public class ShiftsManager
         existingShift.EmployeeId = shift.EmployeeId;
         existingShift.ShiftStatus = shift.ShiftStatus;
         existingShift.CreatedAt = shift.CreatedAt;
+        
+        _context.SaveChanges();
         
         return existingShift;
     }

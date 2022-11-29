@@ -5,8 +5,6 @@ namespace ShiftsTrackerRestApi.Managers;
 
 public class UsersManager
 {
-    private static int _nextUserId = 1;
-    
     private RestContext _context;
 
     public UsersManager(RestContext context)
@@ -14,31 +12,6 @@ public class UsersManager
         _context = context;
     }
     
-    
-    /*
-    private static List<User> _users = new()
-    {
-        new User
-        {
-            Email = "email@email.com",
-            Id = _nextUserId++,
-            FirstName = "John",
-            LastName = "Doe",
-            NfcCardId = "1b",
-            Role = Role.Admin
-        },
-        
-        new User
-        {
-            Email = "email@email.com",
-            Id = _nextUserId++,
-            FirstName = "Jane",
-            LastName = "Frraau",
-            NfcCardId = "1a",
-            Role = Role.Employee
-        },
-    };
-    */
     
     public List<User> GetUsers()
     {
@@ -52,11 +25,9 @@ public class UsersManager
     
     public User AddUser(User user)
     {
-        
-        user.Id = _nextUserId;
         user.Role = Role.Employee;
-        _nextUserId++;
         _context.Users.Add(user);
+        _context.SaveChanges();
         return user;
     }
     
@@ -67,6 +38,7 @@ public class UsersManager
         User? user = _context.Users.Find(id);
         if (user == null) return null;
         _context.Users.Remove(user);
+        _context.SaveChanges();
         return user;
     }
 
@@ -79,6 +51,8 @@ public class UsersManager
         existingUser.FirstName = user.FirstName;
         existingUser.LastName = user.LastName;
         existingUser.Email = user.Email;
+        
+        _context.SaveChanges();
         
         return existingUser;
     }
