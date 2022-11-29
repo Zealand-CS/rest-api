@@ -52,6 +52,7 @@ public class UsersManager
     
     public User AddUser(User user)
     {
+        
         user.Id = _nextUserId;
         user.Role = Role.Employee;
         _nextUserId++;

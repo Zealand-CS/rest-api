@@ -11,4 +11,17 @@ public class Shift
     public DateTime CreatedAt { get; set; }
     
     
+    public void ValidateEmployeeId()
+    {
+        if (EmployeeId <= 0) throw new ArgumentOutOfRangeException(nameof(EmployeeId),"EmployeeId must be greater than 0");
+    }
+    
+    public void ValidateShiftStatus()
+    {
+        if (false == Enum.IsDefined(typeof(ShiftStatus), ShiftStatus)) throw new ArgumentException("Role is not valid");
+    }
+    
+    
+    
+    
 }
