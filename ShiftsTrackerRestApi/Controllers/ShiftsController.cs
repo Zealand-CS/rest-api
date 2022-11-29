@@ -49,14 +49,16 @@ public class ShiftsController : ControllerBase
         return NoContent();
     }
     
+    
+    // POST method for adding a new shift. We need to extract nfcCardId from body
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [HttpPost]
-    public ActionResult<Shift> Create([FromBody] String? nfcCardId)
+    public ActionResult<Shift> Create([FromBody] ShiftDataProtocol? data)
     {
-        if (nfcCardId == null) return BadRequest("Nfc card id is null");
+        if (data == null) return BadRequest("Nfc card id is null");
         if (!ModelState.IsValid) return BadRequest(ModelState);
-        var user = _usersManager.GetUserByNfcCardId(nfcCardId);
+        var user = _usersManager.GetUserByNfcCardId(data.NfcCardId);
         if (user == null) return BadRequest("User not found");
         var result = _shiftsManager.AddShift(user.Id);
         return CreatedAtRoute("Get Shift by Id", new { id = result.Id }, result);
