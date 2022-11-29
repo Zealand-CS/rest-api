@@ -19,7 +19,7 @@ public class ShiftsTrackerTests
     public void Setup()
     {
         _options = new DbContextOptionsBuilder<RestContext>()
-            .UseInMemoryDatabase(databaseName: "ShiftTrackerZealand")
+            .UseInMemoryDatabase(databaseName: "Azure")
             .Options;
         _context = new RestContext(_options);
         _usersManager = new UsersManager(_context);
