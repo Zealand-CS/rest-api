@@ -21,6 +21,24 @@ public class UserManagerTests
     }
     
     [TestMethod]
+    public void AddUserTest()
+    {
+        var user = new User()
+        {
+            LastName = "Madisen",
+            FirstName = "Thomas",
+            Email = "thomasmadisen@shifts.dk",
+            NfcCardId = "1234567890",
+        };
+        
+        var result = _usersManager.AddUser(user);
+        
+        Assert.AreEqual("Thomas", result.FirstName);
+        Assert.IsTrue(_usersManager.GetUser(result.Id) != null);
+        Assert.IsFalse(_usersManager.GetUser(result.Id)?.LastName == "Mad");
+    }
+    
+    [TestMethod]
     public void GetUsersTest()
     {
         var user = new User()
@@ -43,7 +61,7 @@ public class UserManagerTests
         _usersManager.AddUser(user1);
         var usersFromDb = _usersManager.GetUsers();
         
-        Assert.IsTrue(usersFromDb is { Count: 2 });
+        Assert.IsTrue(usersFromDb is { Count: 2 }); 
         
         var userFromDb = usersFromDb.FirstOrDefault(u => u.Id == user.Id);
         var userFromDb1 = usersFromDb.FirstOrDefault(u => u.Id == user1.Id);
@@ -66,24 +84,6 @@ public class UserManagerTests
         var userFromDb = _usersManager.GetUser(user.Id);
         Assert.IsTrue(userFromDb != null && userFromDb.Id == user.Id);
         Assert.AreEqual( user.FirstName, userFromDb.FirstName);
-    }
-    
-    [TestMethod]
-    public void AddUserTest()
-    {
-        var user = new User()
-        {
-            LastName = "Madisen",
-            FirstName = "Thomas",
-            Email = "thomasmadisen@shifts.dk",
-            NfcCardId = "1234567890",
-        };
-        
-        var result = _usersManager.AddUser(user);
-        
-        Assert.AreEqual("Thomas", result.FirstName);
-        Assert.IsTrue(_usersManager.GetUser(result.Id) != null);
-        Assert.IsFalse(_usersManager.GetUser(result.Id)?.LastName == "Mad");
     }
 
     [TestMethod]

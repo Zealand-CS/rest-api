@@ -43,6 +43,7 @@ public class ShiftsManager
         return newShift;
     }
     
+    /*
     public void DeleteShift(int  id)
     {
         var shift = _context.Shifts.FirstOrDefault(s => s.Id == id);
@@ -70,6 +71,7 @@ public class ShiftsManager
         
         return existingShift;
     }
+    */
     
     public List<Shift> GetShiftsByEmployeeId(int employeeId)
     {

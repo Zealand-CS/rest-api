@@ -17,5 +17,8 @@ public static class LocalDBSetup
         RestContext restContext = new RestContext(options);
         usersManager = new UsersManager(restContext);
         shiftsManager = new ShiftsManager(restContext);
+        restContext.Database.EnsureDeleted();
     }
+
+    
 }
