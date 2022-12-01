@@ -8,22 +8,20 @@ namespace ShiftsTrackerTests;
 [TestClass]
 public class ShiftsTrackerTests
 {
-    private DbContextOptions<RestContext> _options;
-    private RestContext _context;
+    
     private UsersManager _usersManager;
     private ShiftsManager _shiftsManager;
+    
+    
 
 
     // Setup DbContext for testing
     [TestInitialize]
     public void Setup()
     {
-        _options = new DbContextOptionsBuilder<RestContext>()
-            .UseInMemoryDatabase(databaseName: "Azure")
-            .Options;
-        _context = new RestContext(_options);
-        _usersManager = new UsersManager(_context);
-        _shiftsManager = new ShiftsManager(_context);
+        LocalDBSetup.Setup();
+        _usersManager = LocalDBSetup.usersManager;
+        _shiftsManager = LocalDBSetup.shiftsManager;
     }
 
 
@@ -40,5 +38,27 @@ public class ShiftsTrackerTests
         var result = _usersManager.AddUser(user);
         Assert.AreEqual("Test", result.LastName);
   
+    }
+
+    [TestMethod]
+    public void UpdateUserTest()
+    {
+        var user = new User()
+        {
+            LastName = "Test",
+            FirstName = "Test",
+            Email = "text@test.dk",
+            NfcCardId = "1234567890",
+        };
+        var result = _usersManager.AddUser(user);
+        
+        result.LastName = "TestTwo";
+        var result2 = _usersManager.UpdateUser(result.Id, result);
+        if (result2 == null)
+        {
+            Assert.Fail();
+        }
+
+        Assert.AreEqual("TestTwo", result2.LastName);
     }
 }

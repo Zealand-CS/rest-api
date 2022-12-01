@@ -18,7 +18,9 @@ public class User
     {
         if (string.IsNullOrEmpty(LastName)) throw new ArgumentNullException( nameof(LastName), "Last name cannot be null or empty.");
         
-        if (LastName.Length > 50) throw new ArgumentOutOfRangeException(nameof(LastName.Length),"Last name cannot be longer than 50 characters");
+        if (LastName.Length > 30) throw new ArgumentOutOfRangeException(nameof(LastName.Length),"Last name cannot be longer than 50 characters");
+        
+        if(LastName.Length < 3) throw new ArgumentOutOfRangeException(nameof(FirstName.Length),"Last name cannot be shorter than 3 characters");
         
         if (LastName.Any(char.IsDigit)) throw new ValidationException("Last name cannot contain digits");
 
@@ -29,7 +31,9 @@ public class User
     {
         if (string.IsNullOrEmpty(FirstName)) throw new ArgumentNullException( nameof(FirstName), "First name cannot be null or empty.");
         
-        if (FirstName.Length > 50) throw new ArgumentOutOfRangeException(nameof(FirstName.Length),"First name cannot be longer than 50 characters");
+        if (FirstName.Length > 30) throw new ArgumentOutOfRangeException(nameof(FirstName.Length),"First name cannot be longer than 50 characters");
+        
+        if(FirstName.Length < 3) throw new ArgumentOutOfRangeException(nameof(FirstName.Length),"First name cannot be shorter than 3 characters");
         
         if (FirstName.Any(char.IsDigit)) throw new ValidationException("First name cannot contain digits");
 
@@ -40,14 +44,13 @@ public class User
     public void EmailValidation()
     {
         var email = Email?.Trim();
+        if (string.IsNullOrEmpty(email)) throw new ArgumentNullException(nameof(email),"Email cannot be empty");
+        if (email.Length > 50) throw new ArgumentOutOfRangeException(nameof(email.Length),"Email cannot be longer than 50 characters");
         Regex regex = new Regex("^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$");
         Match match = regex.Match(email ?? string.Empty);
         if (!match.Success) throw new ArgumentException("Email is not valid");
-        if (string.IsNullOrEmpty(email)) throw new ArgumentNullException(nameof(email),"Email cannot be empty");
-        if (email.Length > 50) throw new ArgumentOutOfRangeException(nameof(email.Length),"Email cannot be longer than 50 characters");
+        
     }
-    
-    
     
     public void RoleValidation()
     {
