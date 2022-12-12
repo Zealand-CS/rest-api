@@ -1,4 +1,5 @@
 using ShiftsTrackerRestApi.Enums;
+using ShiftsTrackerRestApi.Utils;
 
 namespace ShiftsTrackerRestApi.Models;
 
@@ -13,7 +14,7 @@ public class Shift
     
     public void ValidateEmployeeId()
     {
-        if (EmployeeId <= 0) throw new ArgumentOutOfRangeException(nameof(EmployeeId),"EmployeeId must be greater than 0");
+        if (EmployeeId <= Constants.MIN_EMPLOYEE_ID_LENGTH) throw new ArgumentOutOfRangeException(nameof(EmployeeId),"EmployeeId must be greater than 0");
     }
     
     public void ValidateShiftStatus()

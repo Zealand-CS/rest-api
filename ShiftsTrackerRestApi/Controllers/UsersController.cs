@@ -16,9 +16,7 @@ public class UsersController : ControllerBase
     {
         //DB context
         _usersManager = new UsersManager(context);
-       
     }
-    
     
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
@@ -69,7 +67,6 @@ public class UsersController : ControllerBase
         if (result == null) return NotFound("The user was not found, id: " + id);
         return Ok(result);
     }
-    
     
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
