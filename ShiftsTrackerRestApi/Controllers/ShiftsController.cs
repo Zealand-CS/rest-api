@@ -49,7 +49,6 @@ public class ShiftsController : ControllerBase
         return NoContent();
     }
     
-    
     // POST method for adding a new shift. We need to extract nfcCardId from body
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -63,7 +62,4 @@ public class ShiftsController : ControllerBase
         var result = _shiftsManager.AddShift(user.Id);
         return CreatedAtRoute("Get Shift by Id", new { id = result.Id }, result);
     }
-    
-
-    
 }

@@ -12,7 +12,6 @@ public class UsersManager
         _context = context;
     }
     
-    
     public List<User> GetUsers()
     {
         return _context.Users.ToList();
@@ -31,7 +30,6 @@ public class UsersManager
         _context.SaveChanges();
         return user;
     }
-    
     
     public User? DeleteUser(int id)
     {

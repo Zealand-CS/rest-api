@@ -43,36 +43,6 @@ public class ShiftsManager
         return newShift;
     }
     
-    /*
-    public void DeleteShift(int  id)
-    {
-        var shift = _context.Shifts.FirstOrDefault(s => s.Id == id);
-        if (shift == null)
-        {
-            return;
-        }
-        
-        _context.Shifts.Remove(shift);
-        _context.SaveChanges();
-    }
-    
-    public Shift? UpdateShift(int id , Shift shift)
-    {
-        var existingShift = GetShift(id);
-        if (existingShift == null) return null;
-        
-        
-        existingShift.EmployeeId = shift.EmployeeId;
-        existingShift.ShiftStatus = shift.ShiftStatus;
-        existingShift.CreatedAt = shift.CreatedAt;
-        
-        //shift.Validator();
-        _context.SaveChanges();
-        
-        return existingShift;
-    }
-    */
-    
     public List<Shift> GetShiftsByEmployeeId(int employeeId)
     {
         return _context.Shifts.Where(s => s.EmployeeId == employeeId).ToList();
